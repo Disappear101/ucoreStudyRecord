@@ -1,0 +1,95 @@
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial universe restricted multiverse main
+
+#ROS Common Command 
+
+	#创建ROS工作空间
+		mkdir -p ~/catkin_ws/src
+ 		cd ~/catkin_ws/src
+ 		catkin_init_workspace
+		cd ..
+		cakin_make					#编译构建
+		source devel/setup.bash 			#设置环境变量，可手动添加到.bashrc文件中
+
+
+		cd ~/catkin_ws/src
+		catkin_create_pkg  test_pkg std_msgs roscpp rospy
+
+	#rqt_graph						能够创建一个显示当前系统运行情况的动态图形
+		rosrun rqt_graph rqt_graph
+
+	#rostopic echo						可以显示在某个话题上发布的数据。
+		rostopic echo /turtle1/cmd_vel
+
+	#rostopic list						能够列出所有当前订阅和发布的话题。
+
+	#rostopic type						命令用来查看所发布话题的消息类型。
+		rostopic type /turtle1/cmd_vel
+
+	#我们可以使用rosmsg命令来查看消息的详细情况
+		rosmsg show geometry_msgs/Twist
+
+	#rostopicpub						可以把数据发布到当前某个正在广播的话题上
+		rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+		rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]' #1Hz
+
+	#rostopic hz						命令可以用来查看数据发布的频率
+		rostopic hz /turtle1/pose
+
+
+	#rosservice list         				输出可用服务的信息
+	#rosservice call         				调用带参数的服务
+	#rosservice type         				输出服务类型
+	#rosservice find         				依据类型寻找服务find services by service type
+	#rosservice uri          				输出服务的ROSRPC uri 
+
+	#rosparam set            				设置参数
+	#rosparam get            				获取参数
+	#rosparam load           				从文件读取参数
+	#rosparam dump           				向文件中写入参数
+	#rosparam delete         				删除参数
+	#rosparam list           				列出参数名
+
+	#rqt_console属于ROS日志框架(logging framework)的一部分，用来显示节点的输出信息
+	#rqt_logger_level允许我们修改节点运行时输出信息的日志等级（logger levels）
+
+
+	#数据录制和回访
+
+#Linux Common Command
+
+	#用vim创建.cpp文件
+		vim filename.cpp
+		按Esc，输入：wq！，回车保存
+
+
+
+	#python version switch(appliable to version management of most package)
+ 		build alternatives:
+			sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1 # 		添加Python2可选项，优先级为1
+			sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 # 		添加Python3可选项，优先级为2
+ 		switch:
+			sudo update-alternatives --config python
+ 		confirm:
+			sudo update-alternatives --display python
+ 		add link:
+			sudo ln -s /usr/bin/python3.8 /usr/bin/python
+	
+
+	#Download source code of packeage from website:
+	wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-8.2.0/gcc-8.2.0.tar.gz
+	tar xzvf gcc-8.2.0.tar.gz
+	cd gcc-8.2.0/
+
+
+#Git Common Command
+	local repository:
+		git init					#manage current folder
+		git add readme.txt				#add to stage(buffer)
+		git commit					#submit to local repository
+		git status					#check status
+		git diff					#check difference
+		git reset --hard version-ID			#reset to target version
+		git log						#show detailed log
+		git reflog					#show version and corresponding change
+		git checkout --file.txt				#when it doesn't commit,undo the operation on file.txt
+
